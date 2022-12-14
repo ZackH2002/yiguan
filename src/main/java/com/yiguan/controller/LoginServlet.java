@@ -1,6 +1,10 @@
 package com.yiguan.controller;
 
+import com.yiguan.common.BaseResponse;
+import com.yiguan.common.ErrorCode;
 import com.yiguan.model.entity.User;
+import com.yiguan.service.UserService;
+import com.yiguan.service.impl.UserServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -18,6 +22,19 @@ public class LoginServlet extends HttpServlet {
         User user = new User();
         user.setUserName(username);
         user.setUserPassword(password);
+
+        UserService userService = new UserServiceImpl();
+
+        BaseResponse<Boolean> response = userService.userLogin(username,password);
+        if(response.getData()){
+
+            resp.sendRedirect("login.html");
+        }else{
+            req.getSession().setAttribute("loginUser",user);
+            //获取信息
+            //。。。。。
+            resp.sendRedirect("index.html");
+        }
 
     }
 

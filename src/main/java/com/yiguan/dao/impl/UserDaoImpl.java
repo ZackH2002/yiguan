@@ -9,30 +9,31 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class UserDaoImpl implements UserDao {
+public class UserDAOImpl implements UserDao {
+
     @Override
-    public User queryByUsername(User user) {
-        User user1 = null;
-        int result = 0;
+    public User queryUserById(Long id) {
+        User user = null;
+        // 获取jdbc连接
         Connection conn = JDBCUtils.getConnection();
-        String sql = "select userName,userPassword from db_user where username='"+user.getUserName()+"'";
+        // 编写SQL语句
+        String sql = "SELECT * FROM db_user WHERE user_id = ?";
         PreparedStatement statement = null;
         ResultSet resultSet = null;
         try {
             statement = conn.prepareStatement(sql);
             // 给SQL语句占位符赋值
-            statement.setString(1, account);
-            statement.setString(2, userPwd);
+            statement.setLong(1, id);
             // 执行查询语句
             resultSet = statement.executeQuery();
             // 循环读取数据
             while (resultSet.next()) {
-                user = new UserLogin();
-                user.setUserId(resultSet.getInt(1));
-                user.setAccount(resultSet.getString(2));
-                user.setUserPwd(resultSet.getString(3));
-                user.setNickName(resultSet.getString(4));
-                user.setBalance(resultSet.getDouble(5));
+                user = new User();
+                user.setUserId(resultSet.getLong(1));
+                user.setUserName(resultSet.getString(2));
+                user.setUserPassword(resultSet.getString(3));
+                user.setUserAuth(resultSet.getInt(4));
+                user.setEntryDate(resultSet.getDate(5));
             }
 
         } catch (SQLException e) {
@@ -44,5 +45,41 @@ public class UserDaoImpl implements UserDao {
         }
         return user;
     }
+
+
+    @Override
+    public User queryUserByNameAndPwd(String userName, String userPwd) {
+        User user = null;
+        // 获取jdbc连接
+        Connection conn = JDBCUtils.getConnection();
+        // 编写SQL语句
+        String sql = "SELECT * FROM db_user WHERE userName = ? AND userPassword = ?";
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        try {
+            statement = conn.prepareStatement(sql);
+            // 给SQL语句占位符赋值
+            statement.setString(1, userName);
+            statement.setString(2, userPwd);
+            // 执行查询语句
+            resultSet = statement.executeQuery();
+            // 循环读取数据
+            while (resultSet.next()) {
+                user = new User();
+                user.setUserId(resultSet.getLong(1));
+                user.setUserName(resultSet.getString(2));
+                user.setUserPassword(resultSet.getString(3));
+                user.setUserAuth(resultSet.getInt(4));
+                user.setEntryDate(resultSet.getDate(5));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            // 关闭资源
+            JDBCUtils.close(statement, conn);
+            JDBCUtils.close(resultSet);
+        }
+        return user;
     }
 }
