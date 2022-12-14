@@ -7,5 +7,5 @@ function checkLogionFrom() {
     return false;
   }
   document.login_from.submit();
-  return false;
+  return true;
 }

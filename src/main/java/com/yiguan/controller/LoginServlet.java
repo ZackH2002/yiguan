@@ -7,10 +7,12 @@ import com.yiguan.service.UserService;
 import com.yiguan.service.impl.UserServiceImpl;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+
 
 public class LoginServlet extends HttpServlet {
     @Override
@@ -28,12 +30,12 @@ public class LoginServlet extends HttpServlet {
         BaseResponse<Boolean> response = userService.userLogin(username,password);
         if(response.getData()){
 
-            resp.sendRedirect("login.html");
+            resp.sendRedirect("index.html");
         }else{
             req.getSession().setAttribute("loginUser",user);
             //获取信息
             //。。。。。
-            resp.sendRedirect("index.html");
+            resp.sendRedirect("login.html");
         }
 
     }
@@ -41,5 +43,6 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         super.doPost(req, resp);
+        doGet(req,resp);
     }
 }
