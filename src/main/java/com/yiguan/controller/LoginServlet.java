@@ -32,13 +32,16 @@ public class LoginServlet extends HttpServlet {
         System.out.println(flag);
         System.out.println("===============");
         if(flag){
+            resp.setContentType("text/html;charset=utf-8");
             resp.sendRedirect("/html/index.html");
         }else{
+
             String message =  response.getMessage();
+            System.out.println(message);
             req.getSession().setAttribute("message",message);
-            PrintWriter pw=resp.getWriter();
-            pw.write("<script language='javascript'>alert('弹出内容')</script>");
+
             resp.sendRedirect("/html/login.html");
+
         }
     }
 
