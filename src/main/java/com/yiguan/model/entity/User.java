@@ -24,4 +24,8 @@ public class User {
 
     private Date entryDate;
 
+    private int gender;
+
+    private String phone;
+
 }
