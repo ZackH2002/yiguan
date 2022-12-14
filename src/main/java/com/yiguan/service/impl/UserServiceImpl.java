@@ -8,8 +8,10 @@ import com.yiguan.common.ErrorCode;
 import com.yiguan.common.Result;
 import com.yiguan.dao.UserDao;
 import com.yiguan.dao.impl.UserDAOImpl;
+import com.yiguan.model.dto.UserDTO;
 import com.yiguan.model.entity.User;
 import com.yiguan.service.UserService;
+import com.yiguan.utils.UserHolder;
 
 public class UserServiceImpl implements UserService {
 
@@ -21,9 +23,11 @@ public class UserServiceImpl implements UserService {
             return Result.error(ErrorCode.PARAMS_ERROR);
         }
         User user = userDao.queryUserByNameAndPwd(userName, userPwd);
-        if (BeanUtil.isEmpty(user)) {
-            return Result.error(ErrorCode.PARAMS_ERROR, "用户名或者密码错误!");
+        if (!BeanUtil.isEmpty(user)) {
+            UserDTO userDTO = BeanUtil.copyProperties(user, UserDTO.class);
+            UserHolder.saveUser(userDTO);
+            return Result.success(true);
         }
-        return Result.success(true);
+        return Result.error(ErrorCode.PARAMS_ERROR, "用户名或者密码错误!");
     }
 }
