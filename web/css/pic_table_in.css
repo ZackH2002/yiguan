@@ -1,0 +1,31 @@
+*{
+  padding: 0;
+  margin: 0;
+}
+header {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  padding: 30px;
+}
+header h1 {
+  color: #9a9897;
+}
+header hr {
+  margin: 20px 20px 0;
+  /* background-color: #bc9470;
+  border: 2px solid #bc9470; */
+  border: none;
+  width: 30%;
+  height: 0;
+}
+#main{
+  height: 600px;
+  width: 800px;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: auto;
+}
