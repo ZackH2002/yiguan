@@ -11,8 +11,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 
-@WebServlet(value = "/user/login")
+@WebServlet("/login")
 public class LoginServlet extends HttpServlet {
 
     private UserService userService = new UserServiceImpl();
@@ -31,14 +32,18 @@ public class LoginServlet extends HttpServlet {
         System.out.println(flag);
         System.out.println("===============");
         if(flag){
-            resp.sendRedirect("login.html");
+            resp.sendRedirect("/html/index.html");
         }else{
-            resp.sendRedirect("index.html");
+            String message =  response.getMessage();
+            req.getSession().setAttribute("message",message);
+            PrintWriter pw=resp.getWriter();
+            pw.write("<script language='javascript'>alert('弹出内容')</script>");
+            resp.sendRedirect("/html/login.html");
         }
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+    this.doGet(req,resp);
     }
 }
