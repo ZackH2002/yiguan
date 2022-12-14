@@ -37,7 +37,7 @@ public class JDBCUtils {
         Connection connection = null;
         try {
             // 加载驱动
-            Class.forName(driver);
+            Class.forName("com.mysql.cj.jdbc.Driver");
             // 获取连接
             connection = DriverManager.getConnection(url, username, password);
         } catch (ClassNotFoundException e) {
