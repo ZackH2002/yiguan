@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Student Information Management System</title>
+    <link rel="stylesheet" href="../css/table_in.css" rel="external nofollow" />
+    <script>
+      function deleteInfo() {
+        const r = confirm('确定删除此信息？')
+        if (r === true) {
+          //alert("删除成功");
+          return true
+        }
+        return false
+      }
+    </script>
+  </head>
+  <body>
+    <div>
+      <header>
+        <hr />
+        <h1>出库</h1>
+        <hr />
+      </header>
+      <main>
+        <div>
+          <div id="adbt">
+            <a class="xiu" href="addStudent.html">增加记录</a>
+            <a class="dele" href="studentServlet?caozuo=exit">退出系统</a>
+          </div>
+          <div class="table1">
+            <table>
+              <tbody>
+                <tr id="thead">
+                  <td>ID</td>
+                  <td>材料名称</td>
+                  <td>仓库名称</td>
+                  <td>数量</td>
+                  <td>金额</td>
+                  <td>操作员</td>
+                  <td>操作时间</td>
+                  <td>操作</td>
+                </tr>
+                <tr>
+                  <td>1</td>
+                  <td>童装</td>
+                  <td>服装仓库</td>
+                  <td>3</td>
+                  <td>10</td>
+                  <td>李四</td>
+                  <td>2022-12-08</td>
+                  <td>
+                    <a class="dele" href="#">删除</a>
+                    <a class="xiu" href="#">修改</a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>男装</td>
+                  <td>服装仓库</td>
+                  <td>5</td>
+                  <td>20</td>
+                  <td>李四</td>
+                  <td>2022-12-01</td>
+                  <td>
+                    <a class="dele" href="#">删除</a>
+                    <a class="xiu" href="#">修改</a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>
