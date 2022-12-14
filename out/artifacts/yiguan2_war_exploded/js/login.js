@@ -1,4 +1,4 @@
-function checkLogionFrom() {
+function checkLoginFrom() {
   var username = document.login_from.username.value;
   var password = document.login_from.password.value;
   if (username == "" || password == "") {
@@ -7,5 +7,5 @@ function checkLogionFrom() {
     return false;
   }
   document.login_from.submit();
-  return false;
+  return true;
 }
