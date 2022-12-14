@@ -1,5 +1,7 @@
 package com.yiguan.dao;
 
-public interface UserDao {
+import com.yiguan.model.entity.User;
 
+public interface UserDao {
+    public User queryByUsername(User user);
 }
