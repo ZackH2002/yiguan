@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>易管——仓储管理系统</title>
+    <script type="text/javascript">
+      window.onload = initLinkStyle
+
+      function initLinkStyle() {
+        if (document.getElementsByTagName('a')) {
+          var arrLink = document.getElementsByTagName('a')
+          for (i = 0; i < arrLink.length; i++) {
+            var link = arrLink[i]
+            link.className = 'normal'
+            link.onclick = clickNav
+          }
+        }
+      }
+
+      /**
+       * 执行点击事件
+       * @param {Object} event 鼠标事件
+       */
+      function clickNav(event) {
+        var target = event.currentTarget
+
+        //擦出上次选择的a的样式
+        if (document.getElementsByTagName('a')) {
+          var arrLink = document.getElementsByTagName('a')
+          for (i = 0; i < arrLink.length; i++) {
+            var link = arrLink[i]
+            if (link.className == 'active') {
+              link.className = 'normal'
+            }
+          }
+        }
+
+        target.className = 'active'
+      }
+    </script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: #f0ece9;
+      }
+      header {
+        position: fixed;
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-between;
+        width: 100%;
+        padding: 20px;
+        height: 10%;
+        background-color: #f0ece9;
+      }
+      header hr {
+        margin: 20px;
+        /* background-color: #bc9470;
+    border: 2px solid #bc9470; */
+        border: none;
+        width: 30%;
+        height: 0;
+      }
+
+      ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        width: 15%;
+        background-color: #f1f1f1;
+        position: fixed;
+        height: 100%;
+        margin-top: 10%;
+        overflow: auto;
+      }
+
+      li a {
+        display: block;
+        color: #000;
+        padding: 8px 16px;
+        text-decoration: none;
+      }
+
+      li a.active {
+        background-color: #4caf50;
+        color: white;
+      }
+
+      li a:hover:not(.active) {
+        background-color: #555;
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="head">
+      <header>
+        <hr />
+        <h1 style="text-align: center">易管——仓储管理系统</h1>
+        <hr />
+      </header>
+    </div>
+
+    <ul>
+      <li>
+        <a
+          class="active"
+          href="table_in.html"
+          target="iframe_content"
+          rel="noopener"
+          >入库</a
+        >
+      </li>
+      <li>
+        <a href="pic_table_in.html" target="iframe_content" rel="noopener"
+          >入库可视化</a
+        >
+      </li>
+      <li><a href="table_out.html" target="iframe_content" rel="noopener">出库</a></li>
+      <li><a href="pic_table_out.html" target="iframe_content" rel="noopener">出库可视化</a></li>
+      <li><a href="#about">个人信息</a></li>
+    </ul>
+
+    <iframe
+      src="welcome.html"
+      name="iframe_content"
+      frameborder="0"
+      style="margin-left: 15%; margin-top: 10%; height: 1000px; width: 85%"
+    >
+    </iframe>
+  </body>
+</html>
