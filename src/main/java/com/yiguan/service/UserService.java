@@ -6,7 +6,7 @@ import com.yiguan.model.entity.User;
 
 public interface UserService {
 
-    BaseResponse<Boolean> userLogin(String userName, String userPwd);
+    BaseResponse<User> userLogin(String userName, String userPwd);
 
 
 

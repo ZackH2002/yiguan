@@ -34,6 +34,8 @@ public class UserDAOImpl implements UserDao {
                 user.setUserPassword(resultSet.getString(3));
                 user.setUserAuth(resultSet.getInt(4));
                 user.setEntryDate(resultSet.getDate(5));
+                user.setPhone(resultSet.getString(6));
+                user.setGender(resultSet.getInt(7));
             }
 
         } catch (SQLException e) {
@@ -71,6 +73,8 @@ public class UserDAOImpl implements UserDao {
                 user.setUserPassword(resultSet.getString(3));
                 user.setUserAuth(resultSet.getInt(4));
                 user.setEntryDate(resultSet.getDate(5));
+                user.setPhone(resultSet.getString(6));
+                user.setGender(resultSet.getInt(7));
             }
 
         } catch (SQLException e) {

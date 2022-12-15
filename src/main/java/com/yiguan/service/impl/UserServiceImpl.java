@@ -16,15 +16,14 @@ public class UserServiceImpl implements UserService {
     private UserDao userDao = new UserDAOImpl();
 
     @Override
-    public BaseResponse<Boolean> userLogin(String userName, String userPwd) {
+    public BaseResponse<User> userLogin(String userName, String userPwd) {
         if (userPwd == null || userPwd == null) {
             return Result.error(ErrorCode.PARAMS_ERROR);
         }
         User user = userDao.queryUserByNameAndPwd(userName, userPwd);
+        System.out.println("user = " + user);
         if (!BeanUtil.isEmpty(user)) {
-            UserDTO userDTO = BeanUtil.copyProperties(user, UserDTO.class);
-            UserHolder.saveUser(userDTO);
-            return Result.success(true);
+            return Result.success(user);
         }
         return Result.error(ErrorCode.PARAMS_ERROR, "用户名或者密码错误!");
     }
