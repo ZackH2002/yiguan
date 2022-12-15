@@ -6,8 +6,15 @@ import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
-
+@NoArgsConstructor
 public class Depository {
 
+    private Long id;
+
+    private String depositoryName;
+
+    private String address;
+
+    private String introduction;
 
 }

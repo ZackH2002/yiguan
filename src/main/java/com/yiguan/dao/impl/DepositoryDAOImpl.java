@@ -2,7 +2,10 @@ package com.yiguan.dao.impl;
 
 import com.yiguan.dao.DepositoryDAO;
 import com.yiguan.model.dto.MaterialDTO;
+import com.yiguan.model.entity.Depository;
+import com.yiguan.model.entity.DepositoryRecord;
 import com.yiguan.model.entity.Material;
+import com.yiguan.model.vo.DepositoryRecordVO;
 import com.yiguan.utils.JDBCUtils;
 
 import java.sql.Connection;
@@ -120,5 +123,64 @@ public class DepositoryDAOImpl implements DepositoryDAO {
             // 关闭资源
             JDBCUtils.close(statement, conn);
         }
+    }
+
+
+    @Override
+    public void saveDispatchRecord(DepositoryRecord record) {
+        String sql = "INSERT INTO db_depository_record(product_name,depository_name,type,quantity,applicant_id,apply_remark,price) VALUES(?,?,?,?,?,?,?)";
+        Connection connection = JDBCUtils.getConnection();
+        PreparedStatement preparedStatement = null;
+        try {
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, record.getMaterialName());
+            preparedStatement.setString(2, record.getDepositoryName());
+            preparedStatement.setInt(3, record.getType());
+            preparedStatement.setInt(4, record.getQuantity());
+            preparedStatement.setLong(5, record.getApplicantId());
+            preparedStatement.setString(6, record.getApplyRemark());
+            preparedStatement.setDouble(7, record.getPrice());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            JDBCUtils.close(preparedStatement, connection);
+        }
+
+
+    }
+
+    @Override
+    public Depository queryDepositoryById(Long id) {
+        String sql = "SELECT * FROM db_depository WHERE id = ?";
+        PreparedStatement statement = null;
+        Depository depository = null;
+        ResultSet resultSet = null;
+        Connection conn = null;
+        try {
+            conn = JDBCUtils.getConnection();
+            statement = conn.prepareStatement(sql);
+            // 给SQL语句占位符赋值
+            statement.setLong(1, id);
+            // 执行查询语句
+            resultSet = statement.executeQuery();
+            // 循环读取数据
+            while (resultSet.next()) {
+                depository = new Depository();
+                depository.setId(resultSet.getLong(1));
+                depository.setDepositoryName(resultSet.getString(2));
+                depository.setAddress(resultSet.getString(3));
+                depository.setIntroduction(resultSet.getString(4));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            // 关闭资源
+            JDBCUtils.close(statement, conn);
+            JDBCUtils.close(resultSet);
+        }
+        return depository;
+
     }
 }

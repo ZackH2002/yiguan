@@ -1,7 +1,12 @@
 package com.yiguan.dao;
 
 import com.yiguan.model.dto.MaterialDTO;
+import com.yiguan.model.entity.Depository;
+import com.yiguan.model.entity.DepositoryRecord;
 import com.yiguan.model.entity.Material;
+import com.yiguan.model.vo.DepositoryRecordVO;
+
+import java.util.List;
 
 public interface DepositoryDAO {
 
@@ -34,5 +39,20 @@ public interface DepositoryDAO {
      * @param id
      */
     void updateMaterial(int count, double price, Long id);
+
+    /**
+     * 保存调度记录
+     * @param record
+     */
+    void saveDispatchRecord(DepositoryRecord record);
+
+    /**
+     * 通过id查询仓库
+     * @param id
+     * @return
+     */
+    Depository queryDepositoryById(Long id);
+
+
 
 }
