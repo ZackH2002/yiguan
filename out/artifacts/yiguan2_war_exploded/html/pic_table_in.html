@@ -25,101 +25,39 @@
 
       option = {
         title: {
-          text: '入库仓库-报表图',
+          text: 'Referer of a Website',
+          subtext: 'Fake Data',
+          left: 'center'
         },
         tooltip: {
-          trigger: 'axis',
-          axisPointer: {
-            type: 'cross',
-            label: {
-              backgroundColor: '#6a7985',
-            },
-          },
+          trigger: 'item'
         },
         legend: {
-          data: ['童装仓库', '男装仓库', '女装仓库', '玩具仓库', '文具仓库'],
+          orient: 'vertical',
+          left: 'left'
         },
-        toolbox: {
-          feature: {
-            saveAsImage: {},
-          },
-        },
-        grid: {
-          left: '3%',
-          right: '4%',
-          bottom: '3%',
-          containLabel: true,
-        },
-        xAxis: [
-          {
-            type: 'category',
-            boundaryGap: false,
-            data: ['周一', '周二', '周三', '周四', '周五', '周六', '周天'],
-          },
-        ],
-        yAxis: [
-          {
-            type: 'value',
-          },
-        ],
         series: [
           {
-            name: '童装仓库',
-            type: 'line',
-            stack: 'Total',
-            areaStyle: {},
+            name: 'Access From',
+            type: 'pie',
+            radius: '50%',
+            data: [
+              { value: 1048, name: 'Search Engine' },
+              { value: 735, name: 'Direct' },
+              { value: 580, name: 'Email' },
+              { value: 484, name: 'Union Ads' },
+              { value: 300, name: 'Video Ads' }
+            ],
             emphasis: {
-              focus: 'series',
-            },
-            data: [120, 132, 101, 134, 90, 230, 210],
-          },
-          {
-            name: '男装仓库',
-            type: 'line',
-            stack: 'Total',
-            areaStyle: {},
-            emphasis: {
-              focus: 'series',
-            },
-            data: [220, 182, 191, 234, 290, 330, 310],
-          },
-          {
-            name: '女装仓库',
-            type: 'line',
-            stack: 'Total',
-            areaStyle: {},
-            emphasis: {
-              focus: 'series',
-            },
-            data: [150, 232, 201, 154, 190, 330, 410],
-          },
-          {
-            name: '玩具仓库',
-            type: 'line',
-            stack: 'Total',
-            areaStyle: {},
-            emphasis: {
-              focus: 'series',
-            },
-            data: [320, 332, 301, 334, 390, 330, 320],
-          },
-          {
-            name: '文具仓库',
-            type: 'line',
-            stack: 'Total',
-            label: {
-              show: true,
-              position: 'top',
-            },
-            areaStyle: {},
-            emphasis: {
-              focus: 'series',
-            },
-            data: [820, 932, 901, 934, 1290, 1330, 1320],
-          },
-        ],
-      }
-
+              itemStyle: {
+                shadowBlur: 10,
+                shadowOffsetX: 0,
+                shadowColor: 'rgba(0, 0, 0, 0.5)'
+              }
+            }
+          }
+        ]
+      };
       option && myChart.setOption(option)
     </script>
   </body>
