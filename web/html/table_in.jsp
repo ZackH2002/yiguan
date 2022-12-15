@@ -21,7 +21,7 @@
       const r = confirm('确定删除此信息？')
       if (r === true) {
 
-        window.location.replace("DepositoryServlet?caozuo=delete&id="+val);
+        window.location.replace("/DepositoryServlet?caozuo=deleteIn&id="+val);
 
       }
       return false
@@ -64,7 +64,8 @@
             <td>${record.applicantName}</td>
             <td>${record.applyTime}</td>
             <td>
-              <a class="dele" href="#">删除</a>
+<%--              <a class="dele" href="javascript:;" onclick="deleteInfo(${record.id})>删除</a>--%>
+                  <a class="dele" href="javascript:;" onclick="deleteInfo(${record.id})">删除</a>
             </td>
             </tr>
           </c:forEach>

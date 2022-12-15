@@ -1,6 +1,7 @@
 package com.yiguan.controller;
 
 import com.yiguan.common.BaseResponse;
+import com.yiguan.common.Result;
 import com.yiguan.model.dto.MaterialDTO;
 import com.yiguan.model.entity.Material;
 import com.yiguan.model.entity.User;
@@ -31,6 +32,10 @@ public class DepositoryServlet extends HttpServlet {
             this.addMaterial(req,resp);
         } else if (caozuo.equals("out")) {
             this.outMaterial(req,resp);
+        } else if (caozuo.equals("deleteIn")) {
+            this.deleteInRecord(req,resp);
+        }else if (caozuo.equals("deleteExit")){
+            this.deleteOutRecord(req,resp);
         }
     }
 
@@ -69,10 +74,34 @@ public class DepositoryServlet extends HttpServlet {
             var12.printStackTrace();
         }
     }
-    private void deleteMaterial(HttpServletRequest request,HttpServletResponse response){
-        int id = Integer.parseInt(request.getParameter("id"));
-        DepositoryRecordVO depositoryRecordVO = new DepositoryRecordVO();
+    private void deleteInRecord(HttpServletRequest request,HttpServletResponse response){
+        Long id = Long.valueOf(request.getParameter("id"));
+        BaseResponse<Boolean> result = depositoryService.deleteRecord(id);
+        if(result.getData()){
+            BaseResponse<List<DepositoryRecordVO>> listBaseResponse = depositoryService.listInRecords();
+            ArrayList<DepositoryRecordVO> list = (ArrayList<DepositoryRecordVO>) listBaseResponse.getData();
+            request.getSession().setAttribute("listIn",list);
+        }
+        try {
+            response.sendRedirect("html/table_in.jsp");
+        }catch (IOException e){
+            e.printStackTrace();
+        }
 
+    }
+    private void deleteOutRecord(HttpServletRequest request,HttpServletResponse response){
+        Long id = Long.valueOf(request.getParameter("id"));
+        BaseResponse<Boolean> result = depositoryService.deleteRecord(id);
+        if(result.getData()){
+            BaseResponse<List<DepositoryRecordVO>> listBaseResponse = depositoryService.listExitRecords();
+            ArrayList<DepositoryRecordVO> list1 = (ArrayList<DepositoryRecordVO>) listBaseResponse.getData();
+            request.getSession().setAttribute("listExit",list1);
+        }
+        try {
+            response.sendRedirect("html/table_out.jsp");
+        }catch (IOException e){
+            e.printStackTrace();
+        }
     }
     private void outMaterial(HttpServletRequest request,HttpServletResponse response){
         String name = request.getParameter("name");
