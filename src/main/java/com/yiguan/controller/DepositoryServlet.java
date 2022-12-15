@@ -19,7 +19,8 @@ public class DepositoryServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doGet(req, resp);
+        req.setCharacterEncoding("UTF-8");
+        resp.setCharacterEncoding("UTF-8");
         String caozuo = req.getParameter("caozuo");
         if(caozuo.equals("add")){
             this.addMaterial(req,resp);
@@ -28,17 +29,19 @@ public class DepositoryServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPost(req, resp);
         this.doGet(req,resp);
     }
 
     private void addMaterial(HttpServletRequest request, HttpServletResponse response){
         String name = request.getParameter("name");
-        System.out.println(name);
+        System.out.println("name:"+name);
         int quantity = Integer.parseInt(request.getParameter("quantity"));
+        System.out.println("quantity:"+quantity);
         long depositoryId;
         //long depositoryId = Long.parseLong(request.getParameter("depositoryId"));
+
         double price = Double.parseDouble(request.getParameter("price"));
+        System.out.println("price:"+price);
         MaterialDTO material = new MaterialDTO();
         //根据时间戳生成id
 //        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSSS");
