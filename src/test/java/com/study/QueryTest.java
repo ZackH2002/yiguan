@@ -16,7 +16,7 @@ public class QueryTest {
 
     @Test
     public void  queryUserTest() {
-        BaseResponse<Boolean> response = userService.userLogin("1", "2");
+        BaseResponse<User> response = userService.userLogin("1", "2");
         System.out.println("response = " + response);
         User user = userDao.queryUserByNameAndPwd("1", "2");
         System.out.println(user);
