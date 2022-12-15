@@ -66,7 +66,7 @@ public class DepositoryServiceImpl implements DepositoryService {
         depositoryDAO.updateMaterial(quantity, price, material.getId());
         DepositoryRecord record = new DepositoryRecord();
         record.setQuantity(materialDTO.getQuantity());
-        record.setMaterialName(materialDTO.getName());
+        record.setMaterialName(material.getMaterialName());
         record.setPrice(materialDTO.getPrice());
         record.setApplyRemark("出库操作");
         record.setApplicantId(userId);
@@ -87,5 +87,18 @@ public class DepositoryServiceImpl implements DepositoryService {
     public BaseResponse<List<DepositoryRecordVO>> listExitRecords() {
         List<DepositoryRecordVO> list = depositoryDAO.listExitRecords();
         return Result.success(list);
+    }
+
+    @Override
+    public BaseResponse<Boolean> deleteRecord(Long id) {
+        if (id == null) {
+            return null;
+        }
+        try {
+            depositoryDAO.deleteRecord(id);
+            return Result.success(Boolean.TRUE);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }

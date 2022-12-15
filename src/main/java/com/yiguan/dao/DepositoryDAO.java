@@ -65,5 +65,10 @@ public interface DepositoryDAO {
      */
     List<DepositoryRecordVO> listExitRecords();
 
+    /**
+     * 删除记录
+     */
+    void deleteRecord(Long id);
+
 
 }
