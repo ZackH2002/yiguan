@@ -287,7 +287,7 @@ public class DepositoryDAOImpl implements DepositoryDAO {
     @Override
     public List<DepositoryStockVO> listDepositoryStocks() {
         List<DepositoryStockVO> list = new ArrayList<>();
-        String sql = "SELECT db_depository.id,quantity,d_name FROM db_material, db_depository WHERE db_material.depository_id = db_depository.id";
+        String sql = "SELECT SUM(quantity), depository_name, product_name,SUM(price) FROM db_depository_record GROUP BY depository_name, product_name";
         Connection connection = JDBCUtils.getConnection();
         PreparedStatement preparedStatement = null;
         DepositoryStockVO stockVO = null;
@@ -297,9 +297,10 @@ public class DepositoryDAOImpl implements DepositoryDAO {
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 stockVO = new DepositoryStockVO();
-                stockVO.setId(resultSet.getLong(1));
-                stockVO.setStock(resultSet.getInt(2));
-                stockVO.setName(resultSet.getString(3));
+                stockVO.setStock(resultSet.getInt(1));
+                stockVO.setName(resultSet.getString(2));
+                stockVO.setMaterialName(resultSet.getString(3));
+                stockVO.setPrice(resultSet.getDouble(4));
                 list.add(stockVO);
             }
         } catch (SQLException e) {

@@ -1,4 +1,5 @@
-<%--
+<%@ page import="java.util.List" %>
+<%@ page import="com.yiguan.model.vo.DepositoryStockVO" %><%--
   Created by IntelliJ IDEA.
   User: Zack
   Date: 2022/12/15
@@ -7,11 +8,11 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%--<% // 判断session中不存在登录的时候放入的用户实例，则认为处于非登录状态--%>
-<%--    if(session.getAttribute("user")==null){--%>
-<%--        response.sendRedirect("login.htm");--%>
-<%--    }--%>
-<%--%>--%>
+<%
+    List<DepositoryStockVO> data = (List<DepositoryStockVO>) request.getAttribute("data");
+
+
+%>
 <html>
 <head>
     <title>Title</title>
@@ -44,18 +45,16 @@
                 <table>
                     <tbody>
                     <tr id="thead">
-                        <td>ID</td>
                         <td>材料名称</td>
                         <td>仓库名称</td>
                         <td>数量</td>
                         <td>金额</td>
                     </tr>
-                    <c:forEach var="record" items="${sessionScope.listIn}">
+                    <c:forEach var="record" items="${requestScope.data}">
                         <tr>
-                            <td>${record.id}</td>
                             <td>${record.materialName}</td>
-                            <td>${record.depositoryName}</td>
-                            <td>${record.quantity}</td>
+                            <td>${record.name}</td>
+                            <td>${record.stock}</td>
                             <td>${record.price}</td>
                         </tr>
                     </c:forEach>

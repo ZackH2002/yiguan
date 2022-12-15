@@ -15,4 +15,8 @@ public class DepositoryStockVO {
 
     private String name;
 
+    private Double price;
+
+    private String materialName;
+
 }
