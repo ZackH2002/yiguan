@@ -108,4 +108,17 @@ public class DepositoryServiceImpl implements DepositoryService {
         List<DepositoryStockVO> list = depositoryDAO.listDepositoryStocks();
         return Result.success(list);
     }
+
+
+    @Override
+    public BaseResponse<List<DepositoryStockVO>> listStorageStock() {
+        List<DepositoryStockVO> list = depositoryDAO.listTotalStorageCount();
+        return Result.success(list);
+    }
+
+    @Override
+    public BaseResponse<List<DepositoryStockVO>> listExitStock() {
+        List<DepositoryStockVO> list = depositoryDAO.listTotalExitCount();
+        return Result.success(list);
+    }
 }

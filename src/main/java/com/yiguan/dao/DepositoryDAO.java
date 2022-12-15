@@ -78,5 +78,16 @@ public interface DepositoryDAO {
      */
     List<DepositoryStockVO> listDepositoryStocks();
 
+    /**
+     * 查询每个仓库的入库数量
+     * @return
+     */
+    List<DepositoryStockVO> listTotalStorageCount();
+
+    /**
+     * 查询每个仓库的出库数量
+     * @return
+     */
+    List<DepositoryStockVO> listTotalExitCount();
 
 }

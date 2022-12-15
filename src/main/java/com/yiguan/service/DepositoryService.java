@@ -47,4 +47,16 @@ public interface DepositoryService {
      */
     BaseResponse<List<DepositoryStockVO>> listDepositoryStock();
 
+    /**
+     * 统计所有仓库入库数量
+     * @return
+     */
+    BaseResponse<List<DepositoryStockVO>> listStorageStock();
+
+    /**
+     * 统计所有仓库出库数量
+     * @return
+     */
+    BaseResponse<List<DepositoryStockVO>> listExitStock();
+
 }
