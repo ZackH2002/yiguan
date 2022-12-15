@@ -7,6 +7,7 @@ import com.yiguan.model.dto.UserDTO;
 import com.yiguan.model.entity.DepositoryRecord;
 import com.yiguan.model.entity.User;
 import com.yiguan.model.vo.DepositoryRecordVO;
+import com.yiguan.model.vo.DepositoryStockVO;
 import com.yiguan.service.DepositoryService;
 import com.yiguan.service.UserService;
 import com.yiguan.service.impl.DepositoryServiceImpl;
@@ -51,6 +52,14 @@ public class LoginServlet extends HttpServlet {
             BaseResponse<List<DepositoryRecordVO>> listExit = depositoryService.listExitRecords();
             ArrayList<DepositoryRecordVO> list1 = (ArrayList<DepositoryRecordVO>) listExit.getData();
             req.getSession().setAttribute("listExit",list1);
+
+            BaseResponse<List<DepositoryStockVO>> listBaseResponse1 = depositoryService.listStorageStock();
+            ArrayList<DepositoryStockVO> list2 = (ArrayList<DepositoryStockVO>) listBaseResponse1.getData();
+            req.getSession().setAttribute("listPicIn",list2);
+
+            BaseResponse<List<DepositoryStockVO>> listBaseResponse2 = depositoryService.listExitStock();
+            ArrayList<DepositoryStockVO> list3 = (ArrayList<DepositoryStockVO>) listBaseResponse2.getData();
+            req.getSession().setAttribute("listPicExit",list3);
             resp.sendRedirect("/html/index.html");
         }
     }

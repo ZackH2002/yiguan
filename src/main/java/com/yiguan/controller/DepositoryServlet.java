@@ -1,10 +1,12 @@
 package com.yiguan.controller;
 
 import com.yiguan.common.BaseResponse;
+import com.yiguan.common.Result;
 import com.yiguan.model.dto.MaterialDTO;
 import com.yiguan.model.entity.Material;
 import com.yiguan.model.entity.User;
 import com.yiguan.model.vo.DepositoryRecordVO;
+import com.yiguan.model.vo.DepositoryStockVO;
 import com.yiguan.service.DepositoryService;
 import com.yiguan.service.impl.DepositoryServiceImpl;
 
@@ -31,6 +33,10 @@ public class DepositoryServlet extends HttpServlet {
             this.addMaterial(req,resp);
         } else if (caozuo.equals("out")) {
             this.outMaterial(req,resp);
+        } else if (caozuo.equals("deleteIn")) {
+            this.deleteInRecord(req,resp);
+        }else if (caozuo.equals("deleteExit")){
+            this.deleteOutRecord(req,resp);
         }
     }
 
@@ -63,16 +69,43 @@ public class DepositoryServlet extends HttpServlet {
         BaseResponse<List<DepositoryRecordVO>> listBaseResponse = depositoryService.listInRecords();
         ArrayList<DepositoryRecordVO> list = (ArrayList<DepositoryRecordVO>) listBaseResponse.getData();
         request.getSession().setAttribute("listIn",list);
+        BaseResponse<List<DepositoryStockVO>> listBaseResponse1 = depositoryService.listStorageStock();
+        ArrayList<DepositoryStockVO> list2 = (ArrayList<DepositoryStockVO>) listBaseResponse1.getData();
+        request.getSession().setAttribute("listPicIn",list2);
         try {
             response.sendRedirect("html/table_in.jsp");
         } catch (IOException var12) {
             var12.printStackTrace();
         }
     }
-    private void deleteMaterial(HttpServletRequest request,HttpServletResponse response){
-        int id = Integer.parseInt(request.getParameter("id"));
-        DepositoryRecordVO depositoryRecordVO = new DepositoryRecordVO();
+    private void deleteInRecord(HttpServletRequest request,HttpServletResponse response){
+        Long id = Long.valueOf(request.getParameter("id"));
+        BaseResponse<Boolean> result = depositoryService.deleteRecord(id);
+        if(result.getData()){
+            BaseResponse<List<DepositoryRecordVO>> listBaseResponse = depositoryService.listInRecords();
+            ArrayList<DepositoryRecordVO> list = (ArrayList<DepositoryRecordVO>) listBaseResponse.getData();
+            request.getSession().setAttribute("listIn",list);
+        }
+        try {
+            response.sendRedirect("html/table_in.jsp");
+        }catch (IOException e){
+            e.printStackTrace();
+        }
 
+    }
+    private void deleteOutRecord(HttpServletRequest request,HttpServletResponse response){
+        Long id = Long.valueOf(request.getParameter("id"));
+        BaseResponse<Boolean> result = depositoryService.deleteRecord(id);
+        if(result.getData()){
+            BaseResponse<List<DepositoryRecordVO>> listBaseResponse = depositoryService.listExitRecords();
+            ArrayList<DepositoryRecordVO> list1 = (ArrayList<DepositoryRecordVO>) listBaseResponse.getData();
+            request.getSession().setAttribute("listExit",list1);
+        }
+        try {
+            response.sendRedirect("html/table_out.jsp");
+        }catch (IOException e){
+            e.printStackTrace();
+        }
     }
     private void outMaterial(HttpServletRequest request,HttpServletResponse response){
         String name = request.getParameter("name");
@@ -98,6 +131,9 @@ public class DepositoryServlet extends HttpServlet {
         BaseResponse<List<DepositoryRecordVO>> listBaseResponse = depositoryService.listExitRecords();
         ArrayList<DepositoryRecordVO> list = (ArrayList<DepositoryRecordVO>) listBaseResponse.getData();
         request.getSession().setAttribute("listExit",list);
+        BaseResponse<List<DepositoryStockVO>> listBaseResponse2 = depositoryService.listExitStock();
+        ArrayList<DepositoryStockVO> list3 = (ArrayList<DepositoryStockVO>) listBaseResponse2.getData();
+        request.getSession().setAttribute("listPicExit",list3);
         try {
             response.sendRedirect("html/table_out.jsp");
         } catch (IOException var12) {

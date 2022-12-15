@@ -32,8 +32,8 @@
 
   option = {
     title: {
-      text: 'Referer of a Website',
-      subtext: 'Fake Data',
+      text: '入库可视化',
+      subtext: '每个仓库',
       left: 'center'
     },
     tooltip: {
@@ -49,11 +49,11 @@
         type: 'pie',
         radius: '50%',
         data: [
-          { value: 1048, name: 'Search Engine' },
-          { value: 735, name: 'Direct' },
-          { value: 580, name: 'Email' },
-          { value: 484, name: 'Union Ads' },
-          { value: 300, name: 'Video Ads' }
+          { value: ${sessionScope.listPicIn.get(0).stock}, name: '${sessionScope.listPicIn.get(0).name}' },
+          { value: ${sessionScope.listPicIn.get(1).stock}, name: '${sessionScope.listPicIn.get(1).name}' },
+          { value: ${sessionScope.listPicIn.get(2).stock}, name: '${sessionScope.listPicIn.get(2).name}' },
+          { value: ${sessionScope.listPicIn.get(3).stock}, name: '${sessionScope.listPicIn.get(3).name}' },
+          { value: ${sessionScope.listPicIn.get(4).stock}, name: '${sessionScope.listPicIn.get(4).name}' }
         ],
         emphasis: {
           itemStyle: {
