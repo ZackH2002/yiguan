@@ -310,4 +310,56 @@ public class DepositoryDAOImpl implements DepositoryDAO {
         }
         return list;
     }
+
+    @Override
+    public List<DepositoryStockVO> listTotalStorageCount() {
+        String sql = "SELECT sum(quantity), depository_name FROM db_depository_record WHERE type = 0 GROUP BY depository_name";
+        List<DepositoryStockVO> list = new ArrayList<>();
+        Connection connection = JDBCUtils.getConnection();
+        PreparedStatement preparedStatement = null;
+        DepositoryStockVO stockVO = null;
+        ResultSet resultSet = null;
+        try {
+            preparedStatement = connection.prepareStatement(sql);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                stockVO = new DepositoryStockVO();
+                stockVO.setStock(resultSet.getInt(1));
+                stockVO.setName(resultSet.getString(2));
+                list.add(stockVO);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            JDBCUtils.close(preparedStatement, connection);
+            JDBCUtils.close(resultSet);
+        }
+        return list;
+    }
+
+    @Override
+    public List<DepositoryStockVO> listTotalExitCount() {
+        String sql = "SELECT sum(quantity), depository_name FROM db_depository_record WHERE type = 1 GROUP BY depository_name";
+        List<DepositoryStockVO> list = new ArrayList<>();
+        Connection connection = JDBCUtils.getConnection();
+        PreparedStatement preparedStatement = null;
+        DepositoryStockVO stockVO = null;
+        ResultSet resultSet = null;
+        try {
+            preparedStatement = connection.prepareStatement(sql);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                stockVO = new DepositoryStockVO();
+                stockVO.setStock(resultSet.getInt(1));
+                stockVO.setName(resultSet.getString(2));
+                list.add(stockVO);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            JDBCUtils.close(preparedStatement, connection);
+            JDBCUtils.close(resultSet);
+        }
+        return list;
+    }
 }
