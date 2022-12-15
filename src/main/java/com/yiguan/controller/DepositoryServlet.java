@@ -2,6 +2,7 @@ package com.yiguan.controller;
 
 import com.yiguan.model.dto.MaterialDTO;
 import com.yiguan.model.entity.Material;
+import com.yiguan.model.entity.User;
 import com.yiguan.service.DepositoryService;
 import com.yiguan.service.impl.DepositoryServiceImpl;
 
@@ -37,8 +38,7 @@ public class DepositoryServlet extends HttpServlet {
         System.out.println("name:"+name);
         int quantity = Integer.parseInt(request.getParameter("quantity"));
         System.out.println("quantity:"+quantity);
-        long depositoryId;
-        //long depositoryId = Long.parseLong(request.getParameter("depositoryId"));
+        long depositoryId = Long.parseLong(request.getParameter("depositoryId"));
 
         double price = Double.parseDouble(request.getParameter("price"));
         System.out.println("price:"+price);
@@ -49,10 +49,11 @@ public class DepositoryServlet extends HttpServlet {
 //        material.setId(id);
         material.setName(name);
         material.setQuantity(quantity);
-        depositoryId = 1L;
         material.setDepositoryId(depositoryId);
         material.setPrice(price);
-
+        User user = (User) request.getSession().getAttribute("user");
+        System.out.println(user.getUserId());
+        depositoryService.materialStorage(material,user.getUserId());
     }
 }
 
