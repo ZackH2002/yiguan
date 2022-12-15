@@ -5,6 +5,7 @@ import com.yiguan.model.entity.Depository;
 import com.yiguan.model.entity.DepositoryRecord;
 import com.yiguan.model.entity.Material;
 import com.yiguan.model.vo.DepositoryRecordVO;
+import com.yiguan.model.vo.DepositoryStockVO;
 
 import java.util.List;
 
@@ -67,8 +68,15 @@ public interface DepositoryDAO {
 
     /**
      * 删除记录
+     * @param id
      */
     void deleteRecord(Long id);
+
+    /**
+     * 查询每个仓库的库存
+     * @return
+     */
+    List<DepositoryStockVO> listDepositoryStocks();
 
 
 }

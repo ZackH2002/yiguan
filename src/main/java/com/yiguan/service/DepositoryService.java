@@ -3,6 +3,7 @@ package com.yiguan.service;
 import com.yiguan.common.BaseResponse;
 import com.yiguan.model.dto.MaterialDTO;
 import com.yiguan.model.vo.DepositoryRecordVO;
+import com.yiguan.model.vo.DepositoryStockVO;
 
 import java.util.List;
 
@@ -39,5 +40,11 @@ public interface DepositoryService {
      * @return
      */
     BaseResponse<Boolean> deleteRecord(Long id);
+
+    /**
+     * 查询所有仓库库存
+     * @return
+     */
+    BaseResponse<List<DepositoryStockVO>> listDepositoryStock();
 
 }

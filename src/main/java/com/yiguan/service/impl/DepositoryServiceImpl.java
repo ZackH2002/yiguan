@@ -10,6 +10,7 @@ import com.yiguan.model.entity.Depository;
 import com.yiguan.model.entity.DepositoryRecord;
 import com.yiguan.model.entity.Material;
 import com.yiguan.model.vo.DepositoryRecordVO;
+import com.yiguan.model.vo.DepositoryStockVO;
 import com.yiguan.service.DepositoryService;
 
 import java.util.List;
@@ -100,5 +101,11 @@ public class DepositoryServiceImpl implements DepositoryService {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public BaseResponse<List<DepositoryStockVO>> listDepositoryStock() {
+        List<DepositoryStockVO> list = depositoryDAO.listDepositoryStocks();
+        return Result.success(list);
     }
 }

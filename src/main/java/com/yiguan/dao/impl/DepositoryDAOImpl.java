@@ -6,6 +6,7 @@ import com.yiguan.model.entity.Depository;
 import com.yiguan.model.entity.DepositoryRecord;
 import com.yiguan.model.entity.Material;
 import com.yiguan.model.vo.DepositoryRecordVO;
+import com.yiguan.model.vo.DepositoryStockVO;
 import com.yiguan.utils.JDBCUtils;
 
 import java.sql.Connection;
@@ -280,5 +281,33 @@ public class DepositoryDAOImpl implements DepositoryDAO {
             JDBCUtils.close(preparedStatement, connection);
         }
 
+    }
+
+
+    @Override
+    public List<DepositoryStockVO> listDepositoryStocks() {
+        List<DepositoryStockVO> list = new ArrayList<>();
+        String sql = "SELECT db_depository.id,quantity,d_name FROM db_material, db_depository WHERE db_material.depository_id = db_depository.id";
+        Connection connection = JDBCUtils.getConnection();
+        PreparedStatement preparedStatement = null;
+        DepositoryStockVO stockVO = null;
+        ResultSet resultSet = null;
+        try {
+            preparedStatement = connection.prepareStatement(sql);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                stockVO = new DepositoryStockVO();
+                stockVO.setId(resultSet.getLong(1));
+                stockVO.setStock(resultSet.getInt(2));
+                stockVO.setName(resultSet.getString(3));
+                list.add(stockVO);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            JDBCUtils.close(preparedStatement, connection);
+            JDBCUtils.close(resultSet);
+        }
+        return list;
     }
 }
