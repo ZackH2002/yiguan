@@ -264,4 +264,21 @@ public class DepositoryDAOImpl implements DepositoryDAO {
         }
         return res;
     }
+
+    @Override
+    public void deleteRecord(Long id) {
+        String sql = "DELETE FROM db_depository_record WHERE id = ?";
+        Connection connection = JDBCUtils.getConnection();
+        PreparedStatement preparedStatement = null;
+        try {
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setLong(1, id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            JDBCUtils.close(preparedStatement, connection);
+        }
+
+    }
 }

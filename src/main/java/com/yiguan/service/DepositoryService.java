@@ -34,4 +34,10 @@ public interface DepositoryService {
      */
     BaseResponse<List<DepositoryRecordVO>> listExitRecords();
 
+    /**
+     * 删除记录
+     * @return
+     */
+    BaseResponse<Boolean> deleteRecord(Long id);
+
 }
