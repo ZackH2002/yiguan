@@ -1,0 +1,262 @@
+@startuml
+class com.yiguan.model.entity.DepositoryRecord {
+- Long id
+- String materialName
+- String depositoryName
+- int type
+- int quantity
+- Long applicantId
+- String applyRemark
+- Date applyTime
+- Double price
++ void setId(Long)
++ void setMaterialName(String)
++ void setDepositoryName(String)
++ void setType(int)
++ void setQuantity(int)
++ void setApplicantId(Long)
++ void setApplyRemark(String)
++ void setApplyTime(Date)
++ void setPrice(Double)
++ Long getId()
++ String getMaterialName()
++ String getDepositoryName()
++ int getType()
++ int getQuantity()
++ Long getApplicantId()
++ String getApplyRemark()
++ Date getApplyTime()
++ Double getPrice()
+}
+interface com.yiguan.service.UserService {
+~ BaseResponse<User> userLogin(String,String)
+}
+class com.yiguan.utils.UserHolder {
+- {static} ThreadLocal<UserDTO> tl
++ {static} void saveUser(UserDTO)
++ {static} UserDTO getUser()
++ {static} void removeUser()
+}
+class com.yiguan.dao.impl.DepositoryDAOImpl {
++ void saveMaterial(MaterialDTO)
++ Material queryMaterialById(Long,String)
++ void updateMaterialExist(int,double,Long)
++ void updateMaterial(int,double,Long)
++ void saveDispatchRecord(DepositoryRecord)
++ Depository queryDepositoryById(Long)
++ List<DepositoryRecordVO> listStorageRecords()
++ List<DepositoryRecordVO> listExitRecords()
++ void deleteRecord(Long)
++ List<DepositoryStockVO> listDepositoryStocks()
+}
+class com.yiguan.model.dto.UserDTO {
+- Long userId
+- String userName
+- String userPassword
++ Long getUserId()
++ String getUserName()
++ String getUserPassword()
++ void setUserId(Long)
++ void setUserName(String)
++ void setUserPassword(String)
+}
+class com.yiguan.model.entity.Depository {
+- Long id
+- String depositoryName
+- String address
+- String introduction
++ Long getId()
++ String getDepositoryName()
++ String getAddress()
++ String getIntroduction()
++ void setId(Long)
++ void setDepositoryName(String)
++ void setAddress(String)
++ void setIntroduction(String)
+}
+class com.yiguan.common.BaseResponse {
+- int code
+- T data
+- String message
+}
+enum com.yiguan.common.ErrorCode {
++  PARAMS_ERROR
++  NOT_LOGIN_ERROR
++  NO_AUTH_ERROR
++  NOT_FOUND_ERROR
++  FORBIDDEN_ERROR
++  SYSTEM_ERROR
+- int code
+- String message
++ int getCode()
++ String getMessage()
+}
+class com.yiguan.model.vo.DepositoryRecordVO {
+- Long id
+- String materialName
+- String depositoryName
+- Integer quantity
+- Double price
+- String applicantName
+- Date applyTime
++ Long getId()
++ String getMaterialName()
++ String getDepositoryName()
++ Integer getQuantity()
++ Double getPrice()
++ String getApplicantName()
++ Date getApplyTime()
++ void setId(Long)
++ void setMaterialName(String)
++ void setDepositoryName(String)
++ void setQuantity(Integer)
++ void setPrice(Double)
++ void setApplicantName(String)
++ void setApplyTime(Date)
+}
+class com.yiguan.model.entity.User {
+- Long userId
+- String userName
+- String userPassword
+- int userAuth
+- Date entryDate
+- int gender
+- String phone
++ Long getUserId()
++ String getUserName()
++ String getUserPassword()
++ int getUserAuth()
++ Date getEntryDate()
++ int getGender()
++ String getPhone()
++ void setUserId(Long)
++ void setUserName(String)
++ void setUserPassword(String)
++ void setUserAuth(int)
++ void setEntryDate(Date)
++ void setGender(int)
++ void setPhone(String)
+}
+interface com.yiguan.dao.DepositoryDAO {
+~ void saveMaterial(MaterialDTO)
+~ Material queryMaterialById(Long,String)
+~ void updateMaterialExist(int,double,Long)
+~ void updateMaterial(int,double,Long)
+~ void saveDispatchRecord(DepositoryRecord)
+~ Depository queryDepositoryById(Long)
+~ List<DepositoryRecordVO> listStorageRecords()
+~ List<DepositoryRecordVO> listExitRecords()
+~ void deleteRecord(Long)
+~ List<DepositoryStockVO> listDepositoryStocks()
+}
+interface com.yiguan.dao.UserDao {
+~ User queryUserById(Long)
+~ User queryUserByNameAndPwd(String,String)
+}
+class com.yiguan.common.Result {
++ {static} BaseResponse<T> success(T)
++ {static} BaseResponse error(ErrorCode)
++ {static} BaseResponse error(int,String)
++ {static} BaseResponse error(ErrorCode,String)
+}
+class com.yiguan.service.impl.UserServiceImpl {
+- UserDao userDao
++ BaseResponse<User> userLogin(String,String)
+}
+class com.yiguan.controller.UserInfoServlet {
+# void doGet(HttpServletRequest,HttpServletResponse)
+# void doPost(HttpServletRequest,HttpServletResponse)
+}
+class com.yiguan.utils.JDBCUtils {
+- {static} String driver
+- {static} String url
+- {static} String username
+- {static} String password
++ {static} Connection getConnection()
++ {static} void close(PreparedStatement,Connection)
++ {static} void close(ResultSet)
+}
+interface com.yiguan.service.DepositoryService {
+~ BaseResponse<Boolean> materialStorage(MaterialDTO,Long)
+~ BaseResponse<Boolean> materialDelivery(MaterialDTO,Long)
+~ BaseResponse<List<DepositoryRecordVO>> listInRecords()
+~ BaseResponse<List<DepositoryRecordVO>> listExitRecords()
+~ BaseResponse<Boolean> deleteRecord(Long)
+~ BaseResponse<List<DepositoryStockVO>> listDepositoryStock()
+}
+class com.yiguan.model.vo.DepositoryStockVO {
+- Long id
+- Integer stock
+- String name
++ Long getId()
++ Integer getStock()
++ String getName()
++ void setId(Long)
++ void setStock(Integer)
++ void setName(String)
+}
+class com.yiguan.model.entity.Material {
+- Long id
+- Long depositoryId
+- String materialName
+- int quantity
+- Double price
++ void setId(Long)
++ void setDepositoryId(Long)
++ void setMaterialName(String)
++ void setQuantity(int)
++ void setPrice(Double)
++ Long getId()
++ Long getDepositoryId()
++ String getMaterialName()
++ int getQuantity()
++ Double getPrice()
+}
+class com.yiguan.service.impl.DepositoryServiceImpl {
+- DepositoryDAO depositoryDAO
++ BaseResponse<Boolean> materialStorage(MaterialDTO,Long)
++ BaseResponse<Boolean> materialDelivery(MaterialDTO,Long)
++ BaseResponse<List<DepositoryRecordVO>> listInRecords()
++ BaseResponse<List<DepositoryRecordVO>> listExitRecords()
++ BaseResponse<Boolean> deleteRecord(Long)
++ BaseResponse<List<DepositoryStockVO>> listDepositoryStock()
+}
+class com.yiguan.controller.DepositoryServlet {
+~ DepositoryService depositoryService
+# void doGet(HttpServletRequest,HttpServletResponse)
+# void doPost(HttpServletRequest,HttpServletResponse)
+}
+class com.yiguan.dao.impl.UserDAOImpl {
++ User queryUserById(Long)
++ User queryUserByNameAndPwd(String,String)
+}
+class com.yiguan.model.dto.MaterialDTO {
+- Long depositoryId
+- String name
+- Integer quantity
+- Double price
++ Long getDepositoryId()
++ String getName()
++ Integer getQuantity()
++ Double getPrice()
++ void setDepositoryId(Long)
++ void setName(String)
++ void setQuantity(Integer)
++ void setPrice(Double)
+}
+class com.yiguan.controller.LoginServlet {
+- UserService userService
+# void doGet(HttpServletRequest,HttpServletResponse)
+# void doPost(HttpServletRequest,HttpServletResponse)
+}
+
+
+com.yiguan.dao.DepositoryDAO <|.. com.yiguan.dao.impl.DepositoryDAOImpl
+java.io.Serializable <|.. com.yiguan.common.BaseResponse
+com.yiguan.service.UserService <|.. com.yiguan.service.impl.UserServiceImpl
+javax.servlet.http.HttpServlet <|-- com.yiguan.controller.UserInfoServlet
+com.yiguan.service.DepositoryService <|.. com.yiguan.service.impl.DepositoryServiceImpl
+javax.servlet.http.HttpServlet <|-- com.yiguan.controller.DepositoryServlet
+com.yiguan.dao.UserDao <|.. com.yiguan.dao.impl.UserDAOImpl
+javax.servlet.http.HttpServlet <|-- com.yiguan.controller.LoginServlet
+@enduml
