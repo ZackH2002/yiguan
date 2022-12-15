@@ -9,7 +9,10 @@ import com.yiguan.model.dto.MaterialDTO;
 import com.yiguan.model.entity.Depository;
 import com.yiguan.model.entity.DepositoryRecord;
 import com.yiguan.model.entity.Material;
+import com.yiguan.model.vo.DepositoryRecordVO;
 import com.yiguan.service.DepositoryService;
+
+import java.util.List;
 
 public class DepositoryServiceImpl implements DepositoryService {
 
@@ -74,4 +77,15 @@ public class DepositoryServiceImpl implements DepositoryService {
         return Result.success(Boolean.TRUE);
     }
 
+    @Override
+    public BaseResponse<List<DepositoryRecordVO>> listInRecords() {
+        List<DepositoryRecordVO> list = depositoryDAO.listStorageRecords();
+        return Result.success(list);
+    }
+
+    @Override
+    public BaseResponse<List<DepositoryRecordVO>> listExitRecords() {
+        List<DepositoryRecordVO> list = depositoryDAO.listExitRecords();
+        return Result.success(list);
+    }
 }

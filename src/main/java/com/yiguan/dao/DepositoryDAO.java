@@ -53,6 +53,17 @@ public interface DepositoryDAO {
      */
     Depository queryDepositoryById(Long id);
 
+    /**
+     * 查询入库记录
+     * @return
+     */
+    List<DepositoryRecordVO> listStorageRecords();
+
+    /**
+     * 查询出库记录
+     * @return
+     */
+    List<DepositoryRecordVO> listExitRecords();
 
 
 }

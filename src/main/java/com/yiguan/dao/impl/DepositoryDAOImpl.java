@@ -12,6 +12,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DepositoryDAOImpl implements DepositoryDAO {
 
@@ -182,5 +184,84 @@ public class DepositoryDAOImpl implements DepositoryDAO {
         }
         return depository;
 
+    }
+
+
+    @Override
+    public List<DepositoryRecordVO> listStorageRecords() {
+        String sql = "SELECT id, product_name, depository_name,quantity,price,apply_time,userName \n" +
+                "FROM db_depository_record a,db_user b\n" +
+                "WHERE a.applicant_id = b.user_id\n" +
+                "AND a.type = 0;";
+        List<DepositoryRecordVO> res = new ArrayList<>();
+        PreparedStatement statement = null;
+        DepositoryRecordVO record = null;
+        ResultSet resultSet = null;
+        Connection conn = null;
+        try {
+            conn = JDBCUtils.getConnection();
+            statement = conn.prepareStatement(sql);
+            // 执行查询语句
+            resultSet = statement.executeQuery();
+            // 循环读取数据
+            while (resultSet.next()) {
+                record = new DepositoryRecordVO();
+                record.setId(resultSet.getLong(1));
+                record.setMaterialName(resultSet.getString(2));
+                record.setDepositoryName(resultSet.getString(3));
+                record.setQuantity(resultSet.getInt(4));
+                record.setPrice(resultSet.getDouble(5));
+                record.setApplyTime(resultSet.getDate(6));
+                record.setApplicantName(resultSet.getString(7));
+                res.add(record);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            // 关闭资源
+            JDBCUtils.close(statement, conn);
+            JDBCUtils.close(resultSet);
+        }
+        return res;
+    }
+
+    @Override
+    public List<DepositoryRecordVO> listExitRecords() {
+        String sql = "SELECT id, product_name, depository_name,quantity,price,apply_time,userName \n" +
+                "FROM db_depository_record a,db_user b\n" +
+                "WHERE a.applicant_id = b.user_id\n" +
+                "AND a.type = 1;";
+        List<DepositoryRecordVO> res = new ArrayList<>();
+        PreparedStatement statement = null;
+        DepositoryRecordVO record = null;
+        ResultSet resultSet = null;
+        Connection conn = null;
+        try {
+            conn = JDBCUtils.getConnection();
+            statement = conn.prepareStatement(sql);
+            // 执行查询语句
+            resultSet = statement.executeQuery();
+            // 循环读取数据
+            while (resultSet.next()) {
+                record = new DepositoryRecordVO();
+                record.setId(resultSet.getLong(1));
+                record.setMaterialName(resultSet.getString(2));
+                record.setDepositoryName(resultSet.getString(3));
+                record.setQuantity(resultSet.getInt(4));
+                record.setPrice(resultSet.getDouble(5));
+                record.setApplyTime(resultSet.getDate(6));
+                record.setApplicantName(resultSet.getString(7));
+                res.add(record);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            // 关闭资源
+            JDBCUtils.close(statement, conn);
+            JDBCUtils.close(resultSet);
+        }
+        return res;
     }
 }
