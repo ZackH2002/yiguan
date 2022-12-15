@@ -23,7 +23,7 @@ public class JDBCUtils {
     private static String password;
 
     /**
-     * 读书db文件 获取对应信息
+     * 读db文件 获取对应信息
      */
     static {
         ResourceBundle bundle = ResourceBundle.getBundle("db");
