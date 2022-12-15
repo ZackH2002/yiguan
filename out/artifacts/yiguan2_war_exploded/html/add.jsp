@@ -28,7 +28,7 @@
     font-family: 'Open Sans', sans-serif;
     margin: 0;
     /*background-color: #4A374A;   */
-    background-color: #16a085;
+    background-color: #f0ece9;
   }
   #addform {
     position: absolute;
@@ -117,8 +117,11 @@
         <td>仓库</td>
         <td>
           <select class="select" name="depositoryId">
-            <option value="1">服装</option>
+            <option value="1">童装</option>
             <option value="2">男装</option>
+            <option value="3">女装</option>
+            <option value="4">玩具</option>
+            <option value="5">文具</option>
           </select>
         </td>
       </tr>

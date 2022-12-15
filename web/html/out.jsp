@@ -2,7 +2,7 @@
   Created by IntelliJ IDEA.
   User: Zack
   Date: 2022/12/15
-  Time: 14:59
+  Time: 19:37
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -11,10 +11,10 @@
   if(session.getAttribute("user")==null){
     response.sendRedirect("login.htm");
   }
-  %>
-  <html>
+%>
+<html>
 <head>
-    <title>Title</title>
+  <title>Title</title>
 </head>
 <style>
   html {
@@ -89,9 +89,9 @@
 </style>
 <body>
 <div id="addform">
-  <h1>新增入库信息</h1>
+  <h1>新增出库信息</h1>
   <form
-          action="/DepositoryServlet?caozuo=add"
+          action="/DepositoryServlet?caozuo=out"
           method="post"
   >
     <table align="center">
@@ -108,7 +108,7 @@
         </td>
       </tr>
       <tr>
-        <td>入库金额</td>
+        <td>出库金额</td>
         <td>
           <input type="text" name="price" class="inputtext" />
         </td>

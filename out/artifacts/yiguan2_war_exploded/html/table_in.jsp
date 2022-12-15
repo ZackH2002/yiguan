@@ -6,16 +6,23 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<% // 判断session中不存在登录的时候放入的用户实例，则认为处于非登录状态
+  if(session.getAttribute("user")==null){
+    response.sendRedirect("login.htm");
+  }
+%>
 <html>
 <head>
     <title>Title</title>
   <link rel="stylesheet" href="../css/table_in.css" rel="external nofollow" />
   <script>
-    function deleteInfo() {
+    function deleteInfo(val) {
       const r = confirm('确定删除此信息？')
       if (r === true) {
-        //alert("删除成功");
-        return true
+
+        window.location.replace("DepositoryServlet?caozuo=delete&id="+val);
+
       }
       return false
     }
@@ -31,7 +38,7 @@
   <main>
     <div>
       <div id="adbt">
-        <a class="xiu" href="add.html">增加记录</a>
+        <a class="xiu" href="add.jsp">增加记录</a>
         <a class="dele" href="studentServlet?caozuo=exit">退出系统</a>
       </div>
       <div class="table1">
@@ -47,32 +54,20 @@
             <td>操作时间</td>
             <td>操作</td>
           </tr>
-          <tr>
-            <td>1</td>
-            <td>童装</td>
-            <td>服装仓库</td>
-            <td>3</td>
-            <td>10</td>
-            <td>李四</td>
-            <td>2022-12-08</td>
+          <c:forEach var="record" items="${sessionScope.listIn}">
+            <tr>
+            <td>${record.id}</td>
+            <td>${record.materialName}</td>
+            <td>${record.depositoryName}</td>
+            <td>${record.quantity}</td>
+            <td>${record.price}</td>
+            <td>${record.applicantName}</td>
+            <td>${record.applyTime}</td>
             <td>
               <a class="dele" href="#">删除</a>
-              <a class="xiu" href="#">修改</a>
             </td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>男装</td>
-            <td>服装仓库</td>
-            <td>5</td>
-            <td>20</td>
-            <td>李四</td>
-            <td>2022-12-01</td>
-            <td>
-              <a class="dele" href="#">删除</a>
-              <a class="xiu" href="#">修改</a>
-            </td>
-          </tr>
+            </tr>
+          </c:forEach>
           </tbody>
         </table>
       </div>
