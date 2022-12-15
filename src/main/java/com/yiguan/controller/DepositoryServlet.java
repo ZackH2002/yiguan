@@ -6,6 +6,7 @@ import com.yiguan.model.dto.MaterialDTO;
 import com.yiguan.model.entity.Material;
 import com.yiguan.model.entity.User;
 import com.yiguan.model.vo.DepositoryRecordVO;
+import com.yiguan.model.vo.DepositoryStockVO;
 import com.yiguan.service.DepositoryService;
 import com.yiguan.service.impl.DepositoryServiceImpl;
 
@@ -68,6 +69,9 @@ public class DepositoryServlet extends HttpServlet {
         BaseResponse<List<DepositoryRecordVO>> listBaseResponse = depositoryService.listInRecords();
         ArrayList<DepositoryRecordVO> list = (ArrayList<DepositoryRecordVO>) listBaseResponse.getData();
         request.getSession().setAttribute("listIn",list);
+        BaseResponse<List<DepositoryStockVO>> listBaseResponse1 = depositoryService.listStorageStock();
+        ArrayList<DepositoryStockVO> list2 = (ArrayList<DepositoryStockVO>) listBaseResponse1.getData();
+        request.getSession().setAttribute("listPicIn",list2);
         try {
             response.sendRedirect("html/table_in.jsp");
         } catch (IOException var12) {
@@ -127,6 +131,9 @@ public class DepositoryServlet extends HttpServlet {
         BaseResponse<List<DepositoryRecordVO>> listBaseResponse = depositoryService.listExitRecords();
         ArrayList<DepositoryRecordVO> list = (ArrayList<DepositoryRecordVO>) listBaseResponse.getData();
         request.getSession().setAttribute("listExit",list);
+        BaseResponse<List<DepositoryStockVO>> listBaseResponse2 = depositoryService.listExitStock();
+        ArrayList<DepositoryStockVO> list3 = (ArrayList<DepositoryStockVO>) listBaseResponse2.getData();
+        request.getSession().setAttribute("listPicExit",list3);
         try {
             response.sendRedirect("html/table_out.jsp");
         } catch (IOException var12) {
