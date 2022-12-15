@@ -6,6 +6,8 @@ import com.yiguan.common.Result;
 import com.yiguan.dao.DepositoryDAO;
 import com.yiguan.dao.impl.DepositoryDAOImpl;
 import com.yiguan.model.dto.MaterialDTO;
+import com.yiguan.model.entity.Depository;
+import com.yiguan.model.entity.DepositoryRecord;
 import com.yiguan.model.entity.Material;
 import com.yiguan.service.DepositoryService;
 
@@ -14,12 +16,21 @@ public class DepositoryServiceImpl implements DepositoryService {
     private DepositoryDAO depositoryDAO = new DepositoryDAOImpl();
 
     @Override
-    public BaseResponse<Boolean> materialStorage(MaterialDTO material) {
+    public BaseResponse<Boolean> materialStorage(MaterialDTO material, Long userId) {
         if (material == null) {
             return null;
         }
         Long depositoryId = material.getDepositoryId();
+        Depository depository = depositoryDAO.queryDepositoryById(depositoryId);
         String name = material.getName();
+        DepositoryRecord record = new DepositoryRecord();
+        record.setQuantity(material.getQuantity());
+        record.setMaterialName(material.getName());
+        record.setPrice(material.getPrice());
+        record.setApplyRemark("入库操作");
+        record.setApplicantId(userId);
+        record.setType(0);
+        record.setDepositoryName(depository.getDepositoryName());
         // 查询该材料是否已经存在仓库中
         Material queryMaterial = depositoryDAO.queryMaterialById(depositoryId, name);
         if (queryMaterial == null) {
@@ -28,15 +39,17 @@ public class DepositoryServiceImpl implements DepositoryService {
             Long id = queryMaterial.getId();
             depositoryDAO.updateMaterialExist(material.getQuantity(), material.getPrice(), id);
         }
+        depositoryDAO.saveDispatchRecord(record);
         return Result.success(Boolean.TRUE);
     }
 
 
     @Override
-    public BaseResponse<Boolean> materialDelivery(MaterialDTO materialDTO) {
+    public BaseResponse<Boolean> materialDelivery(MaterialDTO materialDTO, Long userId) {
         if (materialDTO == null) {
             return null;
         }
+        Depository depository = depositoryDAO.queryDepositoryById(materialDTO.getDepositoryId());
         Integer quantity = materialDTO.getQuantity();
         Double price = materialDTO.getPrice();
         // 查询该材料的具体信息
@@ -48,6 +61,16 @@ public class DepositoryServiceImpl implements DepositoryService {
             return Result.error(ErrorCode.PARAMS_ERROR, "库存不足");
         }
         depositoryDAO.updateMaterial(quantity, price, material.getId());
+        DepositoryRecord record = new DepositoryRecord();
+        record.setQuantity(material.getQuantity());
+        record.setMaterialName(material.getMaterialName());
+        record.setPrice(material.getPrice());
+        record.setApplyRemark("入库操作");
+        record.setApplicantId(userId);
+        record.setType(1);
+        record.setDepositoryName(depository.getDepositoryName());
+        // 保存调度记录
+        depositoryDAO.saveDispatchRecord(record);
         return Result.success(Boolean.TRUE);
     }
 

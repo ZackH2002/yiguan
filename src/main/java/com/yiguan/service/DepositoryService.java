@@ -10,13 +10,13 @@ public interface DepositoryService {
      * @param materialDTO
      * @return
      */
-    BaseResponse<Boolean> materialStorage(MaterialDTO materialDTO);
+    BaseResponse<Boolean> materialStorage(MaterialDTO materialDTO, Long userId);
 
     /**
      * 材料出库
      * @param materialDTO
      * @return
      */
-    BaseResponse<Boolean> materialDelivery(MaterialDTO materialDTO);
+    BaseResponse<Boolean> materialDelivery(MaterialDTO materialDTO, Long userId);
 
 }

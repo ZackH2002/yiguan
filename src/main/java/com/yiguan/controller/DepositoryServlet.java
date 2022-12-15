@@ -52,7 +52,7 @@ public class DepositoryServlet extends HttpServlet {
         depositoryId = 1L;
         material.setDepositoryId(depositoryId);
         material.setPrice(price);
-        depositoryService.materialStorage(material);
+
     }
 }
 
