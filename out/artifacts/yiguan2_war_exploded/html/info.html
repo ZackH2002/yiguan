@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/info.css" />
+  </head>
+  <body>
+    <div class="content">
+      <p>个人信息:</p>
+      <div class="col1">
+        <span class="title">姓名:</span><span>何雨灿</span>
+        <span class="title">性别:</span><span>男</span>
+      </div>
+      <div class="col2">
+        <span class="title">电话:</span><span>17830059544</span>
+        <span class="title">权限:</span><span>员工</span>
+      </div>
+      <div class="col3">
+        <span class="title">入职时间:</span><span>2022-12-14</span>
+        <span class="title">密码:</span
+        ><span id="password" onclick="showPassword()">********</span>
+      </div>
+    </div>
+    <script>
+      let isShow = false;
+      let a = 123;
+      const password = document.querySelector("#password");
+      function showPassword() {
+        isShow = !isShow;
+        if (isShow === true) {
+          password.innerText = a;
+        } else {
+          password.innerText = "*****";
+        }
+      }
+    </script>
+  </body>
+</html>
