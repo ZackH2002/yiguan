@@ -86,4 +86,30 @@ public class UserDAOImpl implements UserDao {
         }
         return user;
     }
+
+    @Override
+    public void addUser(User user) {
+        String sql = "INSERT INTO db_user(userName, userPassword, phone, gender) VALUES(?,?,?,?)";
+        String password = user.getUserPassword();
+        String userName = user.getUserName();
+        int gender = user.getGender();
+        String phone = user.getPhone();
+        PreparedStatement statement = null;
+        // 获取jdbc连接
+        Connection conn = JDBCUtils.getConnection();
+        try {
+            statement = conn.prepareStatement(sql);
+            // 给SQL语句占位符赋值
+            statement.setString(1, userName);
+            statement.setString(2, password);
+            statement.setString(3, phone);
+            statement.setInt(4, gender);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            JDBCUtils.close(statement, conn);
+        }
+
+    }
 }

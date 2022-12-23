@@ -8,6 +8,6 @@ public interface UserService {
 
     BaseResponse<User> userLogin(String userName, String userPwd);
 
-
+    BaseResponse<Boolean> addUser(User user);
 
 }

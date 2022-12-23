@@ -27,4 +27,16 @@ public class UserServiceImpl implements UserService {
         }
         return Result.error(ErrorCode.PARAMS_ERROR, "用户名或者密码错误!");
     }
+
+    @Override
+    public BaseResponse<Boolean> addUser(User user) {
+
+        try {
+            userDao.addUser(user);
+            return Result.success(Boolean.TRUE);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+    }
 }

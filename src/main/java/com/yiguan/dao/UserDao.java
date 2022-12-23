@@ -19,4 +19,10 @@ public interface UserDao {
      */
     User queryUserByNameAndPwd(String userName, String userPwd);
 
+    /**
+     * 添加用户
+     * @param user 用户实体
+     */
+    void addUser(User user);
+
 }
